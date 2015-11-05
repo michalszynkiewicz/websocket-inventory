@@ -1,0 +1,50 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+group = 'com.mszynkiewicz'
+version = '1.0-SNAPSHOT'
+
+mainClassName = 'com.mszynkiewicz.storage.StorageServer'
+
+repositories {
+    jcenter()
+}
+
+compileJava {
+    sourceCompatibility = '1.8'
+    targetCompatibility = '1.8'
+}
+
+dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.5'
+    compile 'org.slf4j:slf4j-log4j12:1.7.5'
+    def jettyGroup = 'org.eclipse.jetty'
+    def jettyV = '9.3.5.v20151012'
+    compile "${jettyGroup}:jetty-server:$jettyV"
+    compile "${jettyGroup}:jetty-servlet:$jettyV"
+    compile "${jettyGroup}.websocket:websocket-server:$jettyV"
+
+    def springGroup = 'org.springframework'
+    def springV = '4.2.2.RELEASE'
+    compile "$springGroup:spring-core:$springV"
+    compile "$springGroup:spring-web:$springV"
+    compile "$springGroup:spring-beans:$springV"
+    compile "$springGroup:spring-websocket:$springV"
+    compile "$springGroup:spring-messaging:$springV"
+    compile "$springGroup:spring-webmvc:$springV"
+
+    def jacksonGroup = 'com.fasterxml.jackson.core'
+    def jacksonJaxrsGroup = 'com.fasterxml.jackson.jaxrs'
+    def jacksonV = '2.6.3'
+    compile "$jacksonGroup:jackson-databind:$jacksonV"
+    compile "$jacksonGroup:jackson-core:$jacksonV"
+    compile "$jacksonJaxrsGroup:jackson-jaxrs-base:$jacksonV"
+    compile "$jacksonJaxrsGroup:jackson-jaxrs-json-provider:$jacksonV"
+
+    compile('com.sun.jersey:jersey-server:1.8')
+    compile('com.sun.jersey.contribs:jersey-spring:1.19') {
+        exclude group: springGroup
+    }
+
+    testCompile 'junit:junit:4.11'
+}
